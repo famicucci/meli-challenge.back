@@ -6,7 +6,9 @@ exports.list = async (req, res) => {
     const data = await response.json();
     res.status(200).send({
       author: { name: "Francisco", lastname: "Micucci" },
-      categories: [],
+      categories: data.filters
+        .find((item) => item.id === "category")
+        .values[0].path_from_root.map((item) => item.name),
       items: data.results.map((item) => ({
         id: item.id,
         title: item.title,
